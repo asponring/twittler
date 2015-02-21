@@ -12,8 +12,9 @@
         $body.html('<button class="btn">Show <span id="numNewTweets"></span> New Tweets</button>');
 
         var currentTweetIndex = 0;
-        var displayNewTweets = function() {
-          for ( ; currentTweetIndex < streams.home.length; currentTweetIndex++) {
+        var displayNewTweets = function(highestTweetIndex) {
+          if (!highestTweetIndex) { highestTweetIndex = streams.home.length - 1; }
+          for ( ; currentTweetIndex < highestTweetIndex; currentTweetIndex++) {
             $(".btn").hide();
             var tweet = streams.home[currentTweetIndex];
             var $tweet = $('<div></div>');
@@ -21,19 +22,19 @@
             $tweet.insertAfter($(".btn"));
           }
         };
-        
-        displayNewTweets();
 
         var checkForNewTweets = function() {
-          if (streams.home.length > currentTweetIndex) {
+          var highestTweetIndex = streams.home.length - 1;
+          if (highestTweetIndex > currentTweetIndex) {
             $(".btn").show();
-            $("#numNewTweets").text(streams.home.length - currentTweetIndex);
-            $("button").on("click", displayNewTweets);
+            $("#numNewTweets").text(highestTweetIndex - currentTweetIndex);
+            $("button").on("click", function() { displayNewTweets(highestTweetIndex); });
             return true;
           }
           return false;
         }
 
+        displayNewTweets();
         setInterval(checkForNewTweets, 5000);
 
         /* Original code for displaying initial tweets which I'm not using
