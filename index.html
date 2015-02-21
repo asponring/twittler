@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="jquery.js"></script>
+    <script src="moment.js"></script>
     <script src="data_generator.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
@@ -9,17 +10,19 @@
     <script>
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('<button class="btn">Show <span id="numNewTweets"></span> New Tweets</button>');
+        $body.html('<button class="btn">Show <span id="numNewTweets"></span> New Tweets</button><section class="tweetStream"></section>');
 
         var currentTweetIndex = 0;
         var displayNewTweets = function(highestTweetIndex) {
-          if (!highestTweetIndex) { highestTweetIndex = streams.home.length - 1; }
+          if (!highestTweetIndex) { 
+            highestTweetIndex = streams.home.length - 1;
+          }
           for ( ; currentTweetIndex < highestTweetIndex; currentTweetIndex++) {
             $(".btn").hide();
             var tweet = streams.home[currentTweetIndex];
-            var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message);
-            $tweet.insertAfter($(".btn"));
+            var $tweet = $('<div class="tweet"></div>');
+            $tweet.html('<span class="username">@' + tweet.user + '</span> &#183; <span class="time">' + moment(tweet.created_at).fromNow() + '</span><br><span class="tweetMsg">' + tweet.message + "</span>");
+            $tweet.prependTo($(".tweetStream"));
           }
         };
 
