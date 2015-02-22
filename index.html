@@ -20,9 +20,11 @@
           }
 
           //update the timestamps of current tweets
-          var times = $(".tweetStream").find(".time");
-          for (var i = currentTweetIndex, j = 0; i > 0; i--, j++) {
-            $(times[i]).text(moment(streams.home[j].created_at).fromNow());
+          //var times = $(".tweetStream").find(".time");
+          var tweetTime = $(".time").last();
+          for (var i = 0; i < currentTweetIndex; i++) {
+            $(tweetTime).text(moment(streams.home[i].created_at).fromNow());
+            tweetTime = tweetTime.parent().prev().find(".time");
           }
 
           //show the new tweets
@@ -32,6 +34,7 @@
             var $tweet = $('<div class="tweet"></div>');
             $tweet.html('<span class="username">@' + tweet.user + '</span> &#183; <span class="time">' + moment(tweet.created_at).fromNow() + '</span><br><span class="tweetMsg">' + tweet.message + "</span>");
             $tweet.prependTo($(".tweetStream"));
+            //TODO add click handler here for usernames
           }
         };
 

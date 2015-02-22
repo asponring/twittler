@@ -1,3 +1,9 @@
 .tweet {
 	border: 3px black solid;
+	margin: auto;
+}
+
+.tweetStream {
+	/* margin: auto; */
+	margin: 0px 100px;
 }
