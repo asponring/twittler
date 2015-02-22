@@ -14,9 +14,18 @@
 
         var currentTweetIndex = 0;
         var displayNewTweets = function(highestTweetIndex) {
+          //make this function safe if no param passed in
           if (!highestTweetIndex) { 
             highestTweetIndex = streams.home.length - 1;
           }
+
+          //update the timestamps of current tweets
+          var times = $(".tweetStream").find(".time");
+          for (var i = currentTweetIndex, j = 0; i > 0; i--, j++) {
+            $(times[i]).text(moment(streams.home[j].created_at).fromNow());
+          }
+
+          //show the new tweets
           for ( ; currentTweetIndex < highestTweetIndex; currentTweetIndex++) {
             $(".btn").hide();
             var tweet = streams.home[currentTweetIndex];
