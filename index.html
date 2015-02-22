@@ -7,11 +7,20 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
+    <section class="tweetStream">
+      <h2>
+        Your Tweet stream
+      </h2>
+      <button class="btn">
+        Show <span id="numNewTweets"></span> New Tweets
+      </button>
+      <div class="tweets">
+      </div>
+      <div class="userTweets">
+      </div>
+    </section>
     <script>
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('<button class="btn">Show <span id="numNewTweets"></span> New Tweets</button><section class="tweetStream"></section>');
-
         var currentTweetIndex = 0;
         var displayNewTweets = function(highestTweetIndex) {
           //make this function safe if no param passed in
@@ -20,10 +29,9 @@
           }
 
           //update the timestamps of current tweets
-          //var times = $(".tweetStream").find(".time");
           var tweetTime = $(".time").last();
           for (var i = 0; i < currentTweetIndex; i++) {
-            $(tweetTime).text(moment(streams.home[i].created_at).fromNow());
+            tweetTime.text(moment(streams.home[i].created_at).fromNow());
             tweetTime = tweetTime.parent().prev().find(".time");
           }
 
@@ -33,8 +41,10 @@
             var tweet = streams.home[currentTweetIndex];
             var $tweet = $('<div class="tweet"></div>');
             $tweet.html('<span class="username">@' + tweet.user + '</span> &#183; <span class="time">' + moment(tweet.created_at).fromNow() + '</span><br><span class="tweetMsg">' + tweet.message + "</span>");
-            $tweet.prependTo($(".tweetStream"));
-            //TODO add click handler here for usernames
+            $tweet.prependTo($(".tweets"));
+            $tweet.on("click", ".username", function() { 
+              displayUserTweets($(this).text().slice(1));
+            });
           }
         };
 
@@ -47,21 +57,14 @@
             return true;
           }
           return false;
-        }
+        };
+
+        var displayUserTweets = function(userName) {
+          $(".tweets").hide();
+        };
 
         displayNewTweets();
         setInterval(checkForNewTweets, 5000);
-
-        /* Original code for displaying initial tweets which I'm not using
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-        */
 
       });
 

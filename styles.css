@@ -7,3 +7,8 @@
 	/* margin: auto; */
 	margin: 0px 100px;
 }
+
+.username {
+	cursor: pointer;
+	text-decoration: underline;
+}
