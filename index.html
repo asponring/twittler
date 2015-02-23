@@ -5,10 +5,13 @@
     <script src="moment.js"></script>
     <script src="data_generator.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>
+      Twittler - Home Page
+    </title>
   </head>
   <body>
     <nav>
-      <ul>
+      <ul class="nav-buttons">
         <li>
           <a class="home" href="#">Home</a>
         </li>
@@ -29,6 +32,9 @@
       </h1>
     </header>
     <div class="page-container">
+      <aside class="profile-box">
+        <img class="profile-pic" src="andy_icon.png">
+      </aside>
       <section class="tweetStream">
         <h2 class="tweetStreamTitle">
           Your Tweet stream
@@ -91,10 +97,14 @@
           //if no username passed in, then display all tweets
           if (!userName) {
             currentStreamDisplayed = streams.home;
-            $(".tweetStreamTitle").text("Your Tweet stream");  
+            $(".tweetStreamTitle").text("Your Tweet stream");
+            $(".profile-pic").attr("src", "andy_icon.png");
+            document.title = "Twittler - Home Page";
           } else {
             currentStreamDisplayed = streams.users[userName];
-            $(".tweetStreamTitle").text("@" + userName);  
+            $(".tweetStreamTitle").text("@" + userName);
+            $(".profile-pic").attr("src", "default_profile.png");
+            document.title = "Twittler - " + userName + "'s Tweet Stream";
           }
 
           //initialize other elements

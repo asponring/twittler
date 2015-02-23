@@ -47,31 +47,14 @@ table {
 	border-spacing: 0;
 }
 
-.tweet {
-	border: 3px black solid;
-	margin: 10px 0px;
-}
-
-.tweetStream {
-	/* margin: auto; */
-	float: left;
-	margin: 0 10px;
-	width: 590px;
-	border-radius: 6px;
-	background: #fff;
-	color: #292f33;
+body {
+	background-image: url(bg.gif);
+	background-position: left 40px;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-color: #709397;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 14px;
-	line-height: 18px;
-}
-
-.username {
-	cursor: pointer;
-	text-decoration: underline;
-}
-
-.title {
-	text-align: center;
-	font-size: 50px;
 }
 
 nav {
@@ -83,20 +66,67 @@ nav {
 nav li {
 	display: inline;
 	padding: .2em 1em;
-	
 }
 
-body {
-	background-image: url(bg.gif);
-	background-position: left 40px;
-	background-attachment: fixed;
-	background-repeat: no-repeat;
-	background-color: #709397;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+nav li :hover {
+	background-color: white;
+}
+
+.title {
+	text-align: center;
+	font-size: 50px;
+}
+
+.profile-box {
+	border: 1px solid #e1e8ed;
+	background: #FFF;
+	border-radius: 6px;
+	line-height: 16px;
+	position: relative;
+	float: left;
+	display:block;
+	width: 290px;
+	height: 195px;
+
+}
+
+.profile-pic {
+	border-radius: 7px;
+	height: 72px;
+	width: 72px;
+	color: #fff;
+	border: 2px solid #fff;
 }
 
 .page-container {
 	margin: 0 auto;
 	width: 1190px;
 	position: relative;
+}
+
+.tweetStream {
+	/* margin: auto; */
+	float: left;
+	margin: 0 10px;
+	width: 590px;
+	border-radius: 6px;
+	background: #fff;
+	color: #292f33;
+	line-height: 18px;
+}
+
+.tweet {
+	border: 3px black solid;
+	margin: 10px 0px;
+}
+
+.username {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.nav-buttons {
+	margin: 0 auto;
+	position: relative;
+	display: inline-block;
 }
