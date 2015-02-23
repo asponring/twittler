@@ -7,21 +7,40 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
+    <nav>
+      <ul>
+        <li>
+          <a class="home" href="#">Home</a>
+        </li>
+        <li>
+          Notifications
+        </li>
+        <li>
+          Messages
+        </li>
+        <li>
+          Discover
+        </li>
+      </ul>
+    </nav>
     <header>
       <h1 class="title">
         Twittler
       </h1>
     </header>
-    <section class="tweetStream">
-      <h2 class="tweetStreamTitle">
-        Your Tweet stream
-      </h2>
-      <button class="btn">
-        Show <span id="numNewTweets"></span> New Tweets
-      </button>
-      <div class="tweets">
-      </div>
-    </section>
+    <div class="page-container">
+      <section class="tweetStream">
+        <h2 class="tweetStreamTitle">
+          Your Tweet stream
+        </h2>
+        <button class="btn">
+          Show <span id="numNewTweets"></span> New Tweets
+        </button>
+        <div class="tweets">
+        </div>
+      </section>
+    </div>
+
     <script>
       $(document).ready(function(){
         //2 global-ish variables that help log the state of the tweet stream
@@ -72,10 +91,13 @@
           //if no username passed in, then display all tweets
           if (!userName) {
             currentStreamDisplayed = streams.home;
+            $(".tweetStreamTitle").text("Your Tweet stream");  
           } else {
             currentStreamDisplayed = streams.users[userName];
             $(".tweetStreamTitle").text("@" + userName);  
           }
+
+          //initialize other elements
           currentTweetIndex = 0;
           $(".btn").hide();
           $(".btn").off();
@@ -84,6 +106,7 @@
         };
 
         initTweetStream();
+        $(".home").on("click", function() { initTweetStream(); });
         setInterval(checkForNewTweets, 5000);
 
       });
