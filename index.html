@@ -33,12 +33,14 @@
             highestTweetIndex = currentStreamDisplayed.length - 1;
           }
 
+          //hide the button because it's been clicked
+          $(".btn").hide();
+
           //update the timestamps of current tweets
           updateTimestamps();
 
           //show the new tweets
           for ( ; currentTweetIndex < highestTweetIndex; currentTweetIndex++) {
-            $(".btn").hide();
             var tweet = currentStreamDisplayed[currentTweetIndex];
             var $tweet = $('<div class="tweet"></div>');
             $tweet.html('<span class="username">@' + tweet.user + '</span> &#183; <span class="time">' + moment(tweet.created_at).fromNow() + '</span><br><span class="tweetMsg">' + tweet.message + "</span>");
@@ -60,8 +62,8 @@
         var checkForNewTweets = function() {
           var highestTweetIndex = currentStreamDisplayed.length - 1;
           if (highestTweetIndex > currentTweetIndex) {
-            $(".btn").show();
             $("#numNewTweets").text(highestTweetIndex - currentTweetIndex);
+            $(".btn").show();
             $(".btn").on("click", function() { displayNewTweets(highestTweetIndex); });
           }
         };
@@ -76,6 +78,7 @@
           }
           currentTweetIndex = 0;
           $(".btn").hide();
+          $(".btn").off();
           $(".tweets").text("");
           displayNewTweets();
         };
