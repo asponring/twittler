@@ -1,6 +1,6 @@
 .tweet {
 	border: 3px black solid;
-	margin: auto;
+	margin: 10px 0px;
 }
 
 .tweetStream {
@@ -11,4 +11,8 @@
 .username {
 	cursor: pointer;
 	text-decoration: underline;
+}
+
+.title {
+	text-align: center;
 }

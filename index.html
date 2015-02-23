@@ -7,8 +7,13 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
+    <header>
+      <h1 class="title">
+        Twittler
+      </h1>
+    </header>
     <section class="tweetStream">
-      <h2>
+      <h2 class="tweetStreamTitle">
         Your Tweet stream
       </h2>
       <button class="btn">
@@ -16,54 +21,66 @@
       </button>
       <div class="tweets">
       </div>
-      <div class="userTweets">
-      </div>
     </section>
     <script>
       $(document).ready(function(){
-        var currentTweetIndex = 0;
+        //2 global-ish variables that help log the state of the tweet stream
+        var currentTweetIndex, currentStreamDisplayed;
+
         var displayNewTweets = function(highestTweetIndex) {
-          //make this function safe if no param passed in
+          //make this function safe if no arguments passed in
           if (!highestTweetIndex) { 
-            highestTweetIndex = streams.home.length - 1;
+            highestTweetIndex = currentStreamDisplayed.length - 1;
           }
 
           //update the timestamps of current tweets
-          var tweetTime = $(".time").last();
-          for (var i = 0; i < currentTweetIndex; i++) {
-            tweetTime.text(moment(streams.home[i].created_at).fromNow());
-            tweetTime = tweetTime.parent().prev().find(".time");
-          }
+          updateTimestamps();
 
           //show the new tweets
           for ( ; currentTweetIndex < highestTweetIndex; currentTweetIndex++) {
             $(".btn").hide();
-            var tweet = streams.home[currentTweetIndex];
+            var tweet = currentStreamDisplayed[currentTweetIndex];
             var $tweet = $('<div class="tweet"></div>');
             $tweet.html('<span class="username">@' + tweet.user + '</span> &#183; <span class="time">' + moment(tweet.created_at).fromNow() + '</span><br><span class="tweetMsg">' + tweet.message + "</span>");
             $tweet.prependTo($(".tweets"));
             $tweet.on("click", ".username", function() { 
-              displayUserTweets($(this).text().slice(1));
+              initTweetStream($(this).text().slice(1));
             });
           }
         };
 
+        var updateTimestamps = function() {
+          var tweetTime = $(".time").last();
+          for (var i = 0; i < currentTweetIndex; i++) {
+            tweetTime.text(moment(currentStreamDisplayed[i].created_at).fromNow());
+            tweetTime = tweetTime.parent().prev().find(".time");
+          }
+        };
+
         var checkForNewTweets = function() {
-          var highestTweetIndex = streams.home.length - 1;
+          var highestTweetIndex = currentStreamDisplayed.length - 1;
           if (highestTweetIndex > currentTweetIndex) {
             $(".btn").show();
             $("#numNewTweets").text(highestTweetIndex - currentTweetIndex);
-            $("button").on("click", function() { displayNewTweets(highestTweetIndex); });
-            return true;
+            $(".btn").on("click", function() { displayNewTweets(highestTweetIndex); });
           }
-          return false;
         };
 
-        var displayUserTweets = function(userName) {
-          $(".tweets").hide();
+        var initTweetStream = function(userName) {
+          //if no username passed in, then display all tweets
+          if (!userName) {
+            currentStreamDisplayed = streams.home;
+          } else {
+            currentStreamDisplayed = streams.users[userName];
+            $(".tweetStreamTitle").text("@" + userName);  
+          }
+          currentTweetIndex = 0;
+          $(".btn").hide();
+          $(".tweets").text("");
+          displayNewTweets();
         };
 
-        displayNewTweets();
+        initTweetStream();
         setInterval(checkForNewTweets, 5000);
 
       });
