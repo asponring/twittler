@@ -12,31 +12,31 @@
   <body>
     <nav>
       <div class="nav-container">
-      <ul>
-        <a href="#">
+        <ul>
+          <a href="#">
+            <li>
+              <span class="nav-button" id="home">
+                Home
+              </span>
+            </li>
+          </a>
           <li>
-            <span class="nav-button" id="home">
-              Home
+            <span class="nav-button">
+              Notifications
+            </span> 
+          </li>
+          <li>
+            <span class="nav-button">
+              Messages
             </span>
           </li>
-        </a>
-        <li>
-          <span class="nav-button">
-            Notifications
-          </span> 
-        </li>
-        <li>
-          <span class="nav-button">
-            Messages
-          </span>
-        </li>
-        <li>
-          <span class="nav-button">
-            Discover
-          </span>
-        </li>
-      </ul>
-    </div>
+          <li>
+            <span class="nav-button">
+              Discover
+            </span>
+          </li>
+        </ul>
+      </div>
       <h1 class="title">
         Twittler
       </h1>
@@ -44,14 +44,14 @@
     <div class="page-container">
       <aside class="profile-box">
         <img class="profile-pic" src="andy_icon.png">
-        <span class="user-name">
+        <span class="profile-user-name">
           @sswb
         </span>
+        <p class="profile-info">
+          This is you!
+        </p>
       </aside>
       <section class="tweetStream">
-        <h2 class="tweetStreamTitle">
-          Your Tweet stream
-        </h2>
         <button class="btn">
           Show <span id="numNewTweets"></span> New Tweets
         </button>
@@ -101,7 +101,7 @@
           var highestTweetIndex = currentStreamDisplayed.length - 1;
           if (highestTweetIndex > currentTweetIndex) {
             $("#numNewTweets").text(highestTweetIndex - currentTweetIndex);
-            $(".btn").show();
+            $(".btn").slideDown();
             $(".btn").on("click", function() { displayNewTweets(highestTweetIndex); });
           }
         };
@@ -112,13 +112,15 @@
             currentStreamDisplayed = streams.home;
             $(".tweetStreamTitle").text("Your Tweet stream");
             $(".profile-pic").attr("src", "andy_icon.png");
-            $(".user-name").text("@sswb");
+            $(".profile-user-name").text("@sswb");
+            $(".profile-info").text("This is you!");
             document.title = "Twittler - Home Page";
           } else {
             currentStreamDisplayed = streams.users[userName];
             $(".tweetStreamTitle").text("@" + userName);
             $(".profile-pic").attr("src", "default_profile.png");
-            $(".user-name").text("@" + userName);
+            $(".profile-user-name").text("@" + userName);
+            $(".profile-info").text("Follow @" + userName);
             document.title = "Twittler - " + userName + "'s Tweet Stream";
           }
 
@@ -131,7 +133,7 @@
         };
 
         initTweetStream();
-        $(".home").on("click", function() { initTweetStream(); });
+        $("#home").on("click", function() { initTweetStream(); });
         setInterval(checkForNewTweets, 5000);
 
       });
