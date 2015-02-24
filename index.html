@@ -13,11 +13,13 @@
     <nav>
       <div class="nav-container">
       <ul>
-        <li>
-          <span class="nav-button">
-            <a class="home" href="#">Home</a>
-          </span>
-        </li>
+        <a href="#">
+          <li>
+            <span class="nav-button" id="home">
+              Home
+            </span>
+          </li>
+        </a>
         <li>
           <span class="nav-button">
             Notifications
@@ -35,15 +37,16 @@
         </li>
       </ul>
     </div>
-    </nav>
-    <header>
       <h1 class="title">
         Twittler
       </h1>
-    </header>
+    </nav>
     <div class="page-container">
       <aside class="profile-box">
         <img class="profile-pic" src="andy_icon.png">
+        <span class="user-name">
+          @sswb
+        </span>
       </aside>
       <section class="tweetStream">
         <h2 class="tweetStreamTitle">
@@ -109,11 +112,13 @@
             currentStreamDisplayed = streams.home;
             $(".tweetStreamTitle").text("Your Tweet stream");
             $(".profile-pic").attr("src", "andy_icon.png");
+            $(".user-name").text("@sswb");
             document.title = "Twittler - Home Page";
           } else {
             currentStreamDisplayed = streams.users[userName];
             $(".tweetStreamTitle").text("@" + userName);
             $(".profile-pic").attr("src", "default_profile.png");
+            $(".user-name").text("@" + userName);
             document.title = "Twittler - " + userName + "'s Tweet Stream";
           }
 
